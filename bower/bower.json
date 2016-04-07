@@ -1,5 +1,5 @@
 {
-  "name": "gaiainc",
+  "name": "angular-chat-directive",
   "homepage": "https://github.com/I-Value/GaiaInc",
   "authors": [
     "I-Value"
@@ -19,8 +19,6 @@
   ],
   "dependencies": {
     "font-awesome": "fontawesome#~4.5.0",
-    "animate.css-scss": "~3.1.0",
-    "animate.css": "~3.5.1",
     "angular": "1.5.0",
     "gaia-fontawesome": "*",
     "angular-sanitize": "^1.5.0",
