@@ -1,0 +1,244 @@
+.chat-popup, .chat-popup *, .chat-popup *:before, .chat-popup *:after
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  box-sizing: border-box
+
+//.popup-scrolling
+//  position: fixed
+//  overflow-y: scroll
+//  width: 100%
+
+.chat-popup
+  -webkit-animation-duration: 0.4s
+  animation-duration: 0.4s
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  &.popup-closed
+    height: auto
+    .chat-popup-toggle
+      a > .fa-angle-down:before
+        content: "\f106"
+    .popup-messages, .popup-messages-footer
+      display: none
+  &.popup-on .popup-head
+    animation: colorPulse 1s 4
+    -webkit-animation: colorPulse 1s 4
+    -moz-animation: colorPulse 1s 4
+    background-color: $chat-secondary
+    .chat-navbar
+      > li
+        &.active > a
+          background-color: $chat-secondary-dark
+        > a
+          color: #FFF
+          &:hover
+            background-color: $chat-secondary-dark
+  .chat-navbar-brand:hover
+    background-color: inherit !important
+  &.highlight:not(.popup-on)
+    .popup-head
+      animation: colorPulse 0.3s 2
+      -webkit-animation: colorPulse 0.3s 2
+      -moz-animation: colorPulse 0.3s 2
+
+.popup-group
+  z-index: 102
+  position: fixed
+  left: 300px
+  bottom: 0
+  background: $chat-primary
+  display: inline-table
+  &:hover
+    cursor: pointer
+    background-color: $chat-primary-dark
+  .popup-head
+    border-top: 2px solid $chat-secondary
+    text-align: center
+    font-size: 22px
+    padding: 12px 20px
+    color: $chat-text-inverse
+    min-height: 50px
+    box-shadow: 0px 0px 4px darken($chat-primary-dark, 25%)
+    -moz-box-shadow: 0px 0px 4px darken($chat-primary-dark, 25%)
+    &.popup-on
+      animation: colorPulse 1s 4
+      -webkit-animation: colorPulse 1s 4
+      -moz-animation: colorPulse 1s 4
+      background-color: $chat-secondary
+  .popup-group-count
+    margin-left: 15px
+  .chat-contact-list
+    text-align: left
+    overflow: hidden
+
+.popup-box
+  background-color: #ffffff
+  bottom: 0
+  height: 375px
+  position: fixed
+  z-index: 101
+  left: 0
+  width: 275px
+  box-shadow: 0px 0px 5px #888
+  -webkit-box-shadow: 0px 0px 5px #888
+  .popup-head
+    background-color: $chat-primary
+    border-top: 2px solid $chat-secondary
+    float: left
+    width: 100%
+    margin: 0
+    overflow: hidden
+    clear: both
+    display: inline-table
+    width: 100%
+    .chat-status
+      margin-right: 5px
+  .popup-messages
+    position: relative
+    background: #EEEEEE none repeat scroll 0 0
+    height: 275px
+    clear: both
+    .direct-chat-timestamp
+      > .fa
+        margin-right: 5px
+    .chat-box-single-line
+      border-bottom: 1px solid #a4c6b5
+      height: 12px
+      margin: 7px 0 20px
+      position: relative
+      text-align: center
+    .direct-chat-messages
+      height: 100%
+      overflow-x: hidden
+      overflow-y: auto
+    .direct-chat-text
+      position: relative
+      background: #FFFFFF none repeat scroll 0 0
+      border-radius: 4px
+      padding: 10px 14px
+      color: #111
+      word-break: break-all
+      word-break: break-word
+      &::after, &::before
+        content: ""
+        position: absolute
+        display: block
+        width: 0
+        height: 0
+        top: 0
+        right: -7px
+        border-color: transparent
+        border-style: solid
+        border-left-width: 10px
+        border-right-width: 0
+        border-top-width: 0px
+        border-bottom-width: 8px
+        border-left-color: #FFF
+    .direct-chat-info
+      color: $chat-info
+    .direct-chat-name
+      font-size: 15px
+      font-weight: 600
+      margin: 0 0 0 49px !important
+      color: $chat-text-inverse
+      opacity: 0.9
+    .direct-chat-info
+      display: block
+      font-size: 12px
+      margin-bottom: 0
+    .direct-chat-img
+      border-radius: 50%
+      height: 32px
+      width: 32px
+      position: absolute
+      z-index: 1
+    .error-log
+      position: absolute
+      left: 0
+      right: 0
+      bottom: 10px
+      margin: auto
+      width: 90%
+      font-size: 14px
+      background: $chat-primary
+      padding: 8px
+      border-radius: 4px
+
+.popup-messages-footer
+  width: 100%
+  background: #F9F9F9 none repeat scroll 0 0
+  box-shadow: 0px 0px 5px #CCC
+  -webkit-box-shadow: 0px 0px 5px #CCC
+  bottom: 0
+  position: relative
+  > textarea
+    width: 100%
+    height: 50px !important
+    padding: 15px 15px 10px 15px !important
+    border: none
+    border-radius: 0
+    box-shadow: none
+    resize: none
+    margin: 0
+    overflow: hidden
+    &:focus
+      border: 1px solid $chat-info
+
+.direct-chat-messages
+  padding: 15px
+  transform: translate(0px, 0px)
+  .direct-chat-msg
+    margin-top: 9px
+    margin-bottom: 28px
+    position: relative
+    &.me
+      .direct-chat-img
+        right: 0
+        top: -10px
+      .direct-chat-text
+        border-top-right-radius: 0
+        background-color: #CECECE
+        margin-right: 42px
+        &::after, &::before
+          right: -7px
+          border-left-width: 10px
+          border-right-width: 0
+          border-left-color: #CECECE
+      .direct-chat-info
+        text-align: left
+      &.direct-typing-message
+        text-align: right
+    &.user
+      .direct-chat-img
+        left: 0
+        top: -10px
+      .direct-chat-text
+        border-top-left-radius: 0
+        margin-left: 42px
+        &::after, &::before
+          left: -7px
+          border-left-width: 0
+          border-right-width: 10px
+          border-right-color: #FFF
+      .direct-chat-info
+        text-align: right
+    &.direct-typing-message
+      .direct-chat-text
+        display: inline-block
+        padding: 5px 14px
+
+// Responsive
+@media (max-width: 768px)
+  .has-chat-popup-active
+    overflow: hidden
+  .popup-box
+    width: 100%
+    height: 100%
+    min-height: 300px
+    left: 0 !important
+    .chat-popup-toggle
+      display: none
+    .popup-messages
+      height: calc(100% - 100px)
+  .popup-group
+    display: none

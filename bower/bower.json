@@ -1,0 +1,33 @@
+{
+  "name": "gaiainc",
+  "homepage": "https://github.com/I-Value/GaiaInc",
+  "authors": [
+    "I-Value"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "fontawesome#~4.5.0",
+    "animate.css-scss": "~3.1.0",
+    "animate.css": "~3.5.1",
+    "angular": "1.5.0",
+    "gaia-fontawesome": "*",
+    "angular-sanitize": "^1.5.0",
+    "angular-resource": "^1.5.0",
+    "jquery.cookie": "^1.4.1",
+    "angular-moment": "~0.6.2",
+    "moment": "~2.5.1",
+    "angular-animate": "^1.5.2"
+  }
+}

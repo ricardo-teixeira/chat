@@ -1,0 +1,468 @@
+.chat-sidebar, .chat-sidebar *, .chat-sidebar *:before, .chat-sidebar *:after
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  box-sizing: border-box
+
+.slim-scrollbar
+  \::-webkit-scrollbar
+    width: 8px
+  \::-webkit-scrollbar-track
+    background: #EEEEEE
+    -webkit-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1)
+  \::-webkit-scrollbar-thumb
+    background: #CCC
+    -webkit-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.2)
+    &:hover
+      background: #AAA
+    &:active
+      background: #888
+      -webkit-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3)
+
+.slim-scrollbar-dark
+  \::-webkit-scrollbar
+    width: 8px
+  \::-webkit-scrollbar-track
+    background: darken($chat-primary, 2%)
+    -webkit-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1)
+  \::-webkit-scrollbar-thumb
+    background: darken($chat-primary, 10%)
+    -webkit-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.2)
+    &:hover
+      background: darken($chat-primary, 20%)
+    &:active
+      background: darken($chat-primary, 20%)
+      -webkit-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3)
+
+.chat-sidebar, .chat-popup
+  ul
+    margin: 0
+    list-style: none
+    >li .chat-status-indicator
+      margin-right: 5px
+
+.chat-navbar
+  float: left
+  &.right
+    float: right
+  &.left
+    float: left
+  > li
+    float: left
+    display: inline-block
+    margin-right: -1px
+    &.active
+      > a
+        border-bottom: 1px solid $chat-primary-dark
+    &.active, &:hover
+      > a
+        background-color: $chat-primary-dark
+    > a
+      float: left
+      padding: 14px 12px
+      color: $chat-text-inverse
+      -webkit-transition: background-color 0.3s ease
+      transition: background-color 0.3s ease
+      &:hover
+        background-color: $chat-primary-dark
+        cursor: pointer
+        text-decoration: none
+      &:focus
+        text-decoration: none
+      &.chat-navbar-brand
+        font-size: 16px
+        color: $chat-text-inverse
+
+.chat-status-indicator
+  border-radius: 50%
+  height: 12px
+  width: 12px
+  display: inline-block
+  vertical-align: middle
+  &.online
+    background: $status-online
+  &.offline
+    background: $status-offline
+  &.busy
+    background: $status-busy
+  &.away
+    background: $status-away
+
+.contact-photo
+  -webkit-border-radius: 100%
+  border-radius: 100%
+  border-radius: 100%
+  overflow: hidden
+  display: block
+
+.highlighted
+  font-weight: 600
+  color: $chat-secondary
+
+.chat-sidebar
+  position: fixed
+  z-index: 100
+  top: 0
+  bottom: 0
+  width: 300px
+  min-height: 360px
+  font-size: 16px
+  background-color: $chat-primary
+  color: $chat-text
+  -webkit-animation-duration: 0.4s
+  animation-duration: 0.4s
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  //transition: 0.3s ease
+  @media (max-width: 768px)
+    top: 0 !important
+    width: 100%
+  @media (min-width: 768px)
+    border-left: 1px solid lighten($chat-primary, 10%)
+  &.open
+    right: 0
+    -webkit-animation-name: chatSlideInRight
+    animation-name: chatSlideInRight
+  &.closed
+    right: 0
+    -webkit-animation-name: chatSlideOutRight
+    animation-name: chatSlideOutRight
+  a
+    color: $chat-text-inverse
+    &:hover
+      color: $chat-text
+      text-decoration: none
+  .chat-sidebar-container
+    position: relative
+    height: 100%
+    .chat-sidebar-header
+      background-color: $chat-primary
+      border-top: 2px solid $chat-secondary
+      float: left
+      width: 100%
+      margin: 0
+      border-bottom: 1px solid $chat-border-light
+      height: 59px
+      .chat-navbar
+        > li
+          > a
+            padding: 18px 12px
+            &.chat-navbar-brand
+              padding-left: 20px
+
+      .chat-status-indicator
+        margin-right: 7px
+    .chat-body
+      clear: both
+      position: relative
+      height: 100%
+      padding-bottom: 104px
+      .search-input:focus
+        box-shadow: none
+      .chat-contact-list
+        .left
+          padding: 11px 10px 11px 20px
+          .chat-status-indicator
+            position: absolute
+            left: 18px
+            bottom: 10px
+    .chat-sidebar-footer
+      background-color: $chat-primary-dark
+      border-top: 1px solid $chat-border-light
+      position: absolute
+      width: 100%
+      bottom: -1px
+      .chat-navbar
+        > li
+          > a
+            padding: 12px 20px
+            font-size: 18px
+            border-top: 1px solid transparent
+            margin-top: -1px
+            &:hover
+              background-color: $chat-primary
+              border-top: 1px solid $chat-primary
+          &.active
+            > a
+              background-color: $chat-primary
+
+// POPOVER
+.chat-contact-info
+  display: table
+  width: 100%
+  .popover-media
+    position: relative
+    display: table-cell
+  .contact-photo
+    width: 85px
+    height: 85px
+    img
+      min-width: 85px
+      min-height: 85px
+  .contact-info
+    display: table-cell
+    vertical-align: top
+    padding-left: 15px
+  .contact-name
+    font-weight: 400
+    font-size: 18px
+    margin-top: 0
+    margin-bottom: 5px
+  .contact-company
+    font-size: 16px
+    display: block
+  .contact-email
+    color: $chat-icon
+    display: block
+    word-break: break-all
+
+.tab-content
+  float: left
+  width: 100%
+  padding: 12px 20px
+  background-color: $chat-primary-dark
+  &.full
+    clear: both
+    position: relative
+    overflow: auto
+    height: 100%
+    margin: 0
+  ul > li > a
+    color: #FFF
+    padding: 5px 0
+    display: block
+    &:hover
+      text-decoration: none
+    .fa
+      margin-right: 5px
+  > input[type="text"]
+    width: 100%
+    background-color: transparent
+    border: 0
+    margin: 0
+
+// LOADER
+.web-loader
+  padding: 15px
+  -moz-user-select: none
+  -webkit-user-select: none
+  display: flex
+  align-items: center
+  justify-content: center
+  .web-loader-container
+    animation: rotate 2s linear infinite
+    -webkit-animation: rotate 2s linear infinite
+    .web-loader-path
+      stroke-dasharray: 1,150
+      stroke-dashoffset: 0
+      stroke: $chat-secondary
+      stroke-linecap: round
+      animation: dash 1.5s ease-in-out infinite
+      -webkit-animation: dash 1.5s ease-in-out infinite
+
+.chat-loader
+  position: relative
+  padding: 15px
+  -moz-user-select: none
+  -webkit-user-select: none
+  display: flex
+  align-items: center
+  justify-content: center
+  .chat-loader-container
+    animation: rotate 2s linear infinite
+    -webkit-animation: rotate 2s linear infinite
+    .chat-loader-path
+      stroke: $chat-secondary
+      stroke-width: 6px
+      stroke-linecap: round
+      stroke-dasharray: 0, 10
+      stroke-dashoffset: 55
+      cy: 26
+      cx: 26
+      r: 21px
+      fill: none
+    &.first
+      position: relative
+      z-index: 1
+      background: inherit
+    &.second
+      position: relative
+      top: -10px
+      left: -7%
+      .chat-loader-path
+        stroke: #fff
+
+.chat-sidebar .chat-body
+  .chat-loader-container.first .chat-loader-path
+    fill: $chat-primary
+
+// ERRORS
+.error-log
+  text-align: center
+  padding: 15px 10px
+  color: $chat-secondary
+  .fa
+    display: block
+    font-size: 2rem
+
+
+// Popover
+.chat-popover
+  background-color: $chat-primary
+  border-color: $chat-secondary !important
+  min-width: 220px
+  border: 0
+  border-radius: 0
+  box-shadow: 0px 0px 4px darken($chat-primary-dark, 25%)
+  -moz-box-shadow: 0px 0px 4px darken($chat-primary-dark, 25%)
+  width: 100%
+  z-index: 110
+  label
+    float: none
+    padding: 0 !important
+    display: block
+    min-height: initial !important
+    font-size: 14px !important
+    color: $chat-text !important
+  input[type="text"]
+    width: 100%
+    box-sizing: border-box
+    font-size: 14px !important
+    color: $chat-text !important
+    border: 1px solid $grey !important
+  .popover-title
+    padding: 15px
+    background-color: transparent
+    border: 0
+    border-radius: 0
+    color: #888
+    text-align: center
+    font-size: 14px
+  .popover-content
+    font-size: 14px
+    padding: 0
+    .chat-contact-list li
+      padding: 10px 0px 10px 20px
+      .chat-popup-close
+        position: absolute
+        right: 15px
+        top: 25px
+        font-size: 16px
+        color: $chat-icon
+        &:hover
+          color: $chat-icon-dark
+  &.top
+    border-bottom-width: 5px
+    border-bottom-style: solid
+    .arrow
+      border-top-color: $chat-secondary
+      margin-left: -8px
+      bottom: -15px
+      border-width: 10px 6px 0
+      &:after
+        border-top-color: $chat-secondary
+        margin-left: 4px
+        border-width: 11px 7px 0
+  &.bottom
+    border-top-width: 5px
+    border-top-style: solid
+    .arrow
+      border-bottom-color: $chat-secondary
+      margin-left: -8px
+      top: -15px
+      border-width: 0 7px 10px
+      &:after
+        border-bottom-color: $chat-secondary
+        margin-left: 4px
+        border-width: 0 7px 11px
+  &.right
+    border-left-width: 5px
+    border-left-style: solid
+    .arrow
+      border-right-color: $chat-secondary
+      margin-top: -7px
+      left: -15px
+      border-width: 7px 10px 7px 0
+      &:after
+        border-right-color: $chat-secondary
+        bottom: -7px
+        border-width: 7px 11px 7px 0
+  &.left
+    border-right-width: 5px
+    border-right-style: solid
+    .arrow
+      border-left-color: $chat-secondary
+      margin-top: -7px
+      right: -15px
+      border-width: 7px 0 7px 10px
+      &:after
+        border-left-color: $chat-secondary
+        bottom: -7px
+        border-width: 7px 0 7px 11px
+  .arrow
+    border-width: 8px
+    &:after
+      border-width: 7px
+
+.chat-contact-list
+  clear: both
+  overflow-x: hidden
+  overflow-y: auto
+  height: 100%
+  margin: 0
+  list-style: none
+  &.search-results
+    height: auto !important
+  li
+    position: relative
+    display: block
+    overflow: hidden
+    -webkit-transition: 0.3s ease
+    transition: 0.3s ease
+    .left
+      position: relative
+      display: table-cell
+      text-align: center
+      vertical-align: middle
+      padding: 0 10px 0 0
+      .chat-status-indicator
+        position: absolute
+        left: 0
+        bottom: 0
+    .right
+      display: table-cell
+      vertical-align: middle
+    .contact-photo
+      width: 40px
+      height: 40px
+      img
+        min-width: 40px
+        min-height: 40px
+    .contact-name
+      font-weight: normal
+      font-size: 15px
+      margin-top: 5px
+      margin-bottom: 0
+    .contact-last-message
+      font-size: 14px
+    &:hover
+      cursor: pointer
+      background-color: $chat-primary-dark
+    &.has-unread
+      border-left: 4px solid $chat-secondary
+      .contact-name
+        font-weight: 600
+        color: $chat-text-inverse
+      .contact-last-message
+        color: $chat-icon
+        font-weight: 600
+    &.has-popup
+      background-color: $chat-primary-dark
+
+// Responsive
+@media (max-width: 768px)
+  .has-chat-sidebar-active
+    overflow: hidden
+  .chat-sidebar
+    z-index: 120
+    .chat-popover
+      display: none !important
