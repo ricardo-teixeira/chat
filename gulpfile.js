@@ -9,21 +9,14 @@ var gulp = require('gulp'),
 
 // Scripts Task
 gulp.task('scripts', function(){
-	gulp.src(['src/**/*.js'])
+	gulp.src(['src/script/chat.mdl.js', 'src/script/chat.drv.js', 'src/script/chat.fct.js'])
 		.pipe(plumber())
-		.pipe(concat('chat.min.js'))
 		.pipe(uglify())
+		.pipe(concat('chat.min.js'))
 		.pipe(gulp.dest('dist/js/'));
 });
 
 // Styles Task
-// gulp.task('styles', function () {
-// 	return gulp.src(['src/**/*.css', '!src/**/style.css'])
-// 		.pipe(cssmin())
-// 		.pipe(concat('emoji.min.css'))
-// 		.pipe(gulp.dest('dist/css'));
-// });
-
 gulp.task('styles', function(){
     sass('src/**/*.sass')
         .on('error', sass.logError)
@@ -33,16 +26,7 @@ gulp.task('styles', function(){
 	}
 );
 
-// gulp.task('styles', function () {
-//   return gulp.src('src/**/*.sass')
-//     .pipe(sass().on('error', sass.logError))
-//     .pipe(cssmin())
-// 	.pipe(concat('chat.min.css'))
-//     .pipe(gulp.dest('dist/css'));
-// });
-
 //  Watch Task
-//  Watches JS
 gulp.task('watch', function(){
 	gulp.watch('src/**/*.js', ['scripts']);
 	gulp.watch('src/**/*.css', ['styles']);

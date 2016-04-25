@@ -209,7 +209,7 @@
                     var typingTimeout;
                     typingTimeout = void 0;
 
-                    scope.isTyping = function (event) {                        
+                    scope.isTyping = function (event) {
                         var roomId;
                         if (event.keyCode !== 13) {
                             roomId = scope.popup.roomId;
@@ -503,7 +503,7 @@
             };
         })
 
-        .directive('focusOn', function($timeout) {
+        .directive('focusOn', ['$timeout', function($timeout) {
             return function(scope, element, attrs) {
                 scope.$watch(attrs.focusOn, function(n) {
                     if(n) {
@@ -513,7 +513,7 @@
                     }
                 });
             };
-        })
+        }])
 
         .directive('infiniteScroll', [
             '$timeout', function($timeout) {
@@ -536,7 +536,7 @@
             }
         ])
 
-        .directive('chatPopover', function ($compile) {
+        .directive('chatPopover', ['$compile', function ($compile) {
             return {
                 restrict: "EA",
                 transclude: true,
@@ -582,9 +582,9 @@
                     }
                 }
             };
-        })
+        }])
 
-        .directive('popupGroup', function ($timeout) {
+        .directive('popupGroup', ['$timeout', function ($timeout) {
             var template =  '<div class="popup-head" ng-class="{\'popup-on\': unreads > 0}"><i class="fa fa-comments"></i><span class="popup-group-count">{{contacts.length}}</span></div>'+
                             '<div class="chat-popover popover fade top in" style="width: 300px; left: -100px;">'+
                             '    <div class="arrow"></div>'+
@@ -741,24 +741,24 @@
                     })
                 }
             };
-        })
+        }])
 
         // HIGHLIGHT TEXT IN SEARCH FILTER
-        .filter('highlight', function($sce) {
+        .filter('highlight', ['$sce', function($sce) {
             return function(text, phrase) {
                 if (phrase) text = text.replace(new RegExp('('+phrase+')', 'gi'),
                     '<span class="highlighted">$1</span>')
                 return $sce.trustAsHtml(text)
             }
-        })
+        }])
 
-        .filter('html',function($sce){
+        .filter('html', ['$sce', function($sce){
             return function(input){
                 return $sce.trustAsHtml(input);
             }
-        })
+        }])
 
-        .filter('stripHTML',function(){
+        .filter('stripHTML', function(){
             return function(text){
                 var regex = /(<([^>]+)>)/ig;
                 return text.replace(regex, "");
