@@ -1,12 +1,13 @@
 (function(){
 
-    angular.module('ValueChat', ['ngResource', 'ngSanitize', 'angularMoment', 'ngAnimate']);
+    angular.module('ValueChat', ['ngResource', 'ngSanitize', 'angularMoment', 'ngAnimate', 'emojiApp']);
 
     // CHAT SIDEBAR
     angular.module('ValueChat')
         .directive('chatSidebar', ['$rootScope', function($rootScope){
             var template =
-                "<div class='chat-sidebar-container'>"+
+                "<div class='error-log' ng-if='vm.errorLog(1)'><i class='fa fa-chain-broken' aria-hidden='true'></i>{{vm.errorLog(1).message}}</div>"+
+                "<div class='chat-sidebar-container' ng-if='!vm.errorLog(1)'>"+
                     "<div class='chat-sidebar-header'>"+
                         "<ul class='chat-navbar left'>"+
                             "{{currentStatus | json}}"+
@@ -17,15 +18,15 @@
                             "</li>"+
                         "</ul>"+
                         "<ul class='chat-navbar right'>"+
-                            "<li ng-if='!vm.errorLog(2)' ng-class=\"{active: isActiveTab('search')}\"><a href='#' ng-click=\"setActiveTab('search')\"><i class='fa fa-search'></i></a></li>"+
-                            "<li ng-class=\"{active: isActiveTab('config')}\"><a href='#' ng-click=\"setActiveTab('config')\"><i class='fa fa-cog'></i></a></li>"+
-                            "<li><a class='chat-toggle' href='#' ng-click='toggleChat()'><i class='fa fa-chevron-right'></i></a></li>"+
+                            "<li ng-if='!vm.errorLog(2)' ng-class=\"{active: isActiveTab('search')}\"><a href='javascript:;' ng-click=\"setActiveTab('search')\"><i class='fa fa-search'></i></a></li>"+
+                            "<li ng-class=\"{active: isActiveTab('config')}\"><a href='javascript:;' ng-click=\"setActiveTab('config')\"><i class='fa fa-cog'></i></a></li>"+
+                            "<li><a class='chat-toggle' href='javascript:;' ng-click='toggleChat()'><i class='fa fa-chevron-right'></i></a></li>"+
                         "</ul>"+
                     "</div>"+
                     "<div class='chat-body slim-scrollbar-dark'>"+
                         "<div class='tab-content' ng-show=\"isActiveTab('status')\">"+
                             "<ul>"+
-                                "<li ng-repeat='status in vm.statusList'><a href='#' ng-click='vm.changeStatus(status.id)'><span chat-status='status.id'></span>{{status.name}}</a></li>"+
+                                "<li ng-repeat='status in vm.statusList'><a href='javascript:;' ng-click='vm.changeStatus(status.id)'><span chat-status='status.id'></span>{{status.name}}</a></li>"+
                             "</ul>"+
                         "</div>"+
                         "<div class='tab-content' ng-show=\"isActiveTab('search')\">"+
@@ -33,8 +34,8 @@
                         "</div>"+
                         "<div class='tab-content full' ng-show=\"isActiveTab('config')\">"+
                             "<ul>"+
-                                "<li><a href='#'><i class='fa fa-music'></i>Som do bate-papo <switch class='pull-right' ng-model='vm.chatConfig.sound'></switch></a></li>"+
-                                "<li><a href='#'><i class='fa fa-flag-o'></i>Notificações no navegador <switch class='pull-right' ng-model='vm.chatConfig.notifications'></switch></a></li>"+
+                                "<li><a href='javascript:;'><i class='fa fa-music'></i>Som do bate-papo <switch class='pull-right' ng-model='vm.settings.sound'></switch></a></li>"+
+                                "<li><a href='javascript:;'><i class='fa fa-flag-o'></i>Notificações no navegador <switch class='pull-right' ng-model='vm.settings.notifications'></switch></a></li>"+
                             "</ul>"+
                         "</div>"+
                         // Search results
@@ -44,13 +45,13 @@
                                     "<img class='contact-photo' dummy-image='search.participant[0].photo' dummy-text='search.participant[0].name'><span chat-status='search.participant[0].status'></span>"+
                                 "</div>"+
                                 "<div class='right'>"+
-                                    "<h4 class='contact-name' ng-bind-html='search.participant[0].name | trim:true:28 | highlight:searchBy.text'></h4>"+
-                                    "<div class='contact-last-message' ng-bind-html='search.lastMessage | trim:true:28 | html'></div>"+
+                                    "<h4 class='contact-name' ng-bind-html='search.participant[0].name | trim:true:35 | highlight:searchBy.text'></h4>"+
+                                    "<div class='contact-last-message' ng-bind-html='search.lastMessage | trim:true:35 | colonToSmiley'></div>"+
                                 "</div>"+
                             "</li>"+
                         "</ul>"+
                         // Error logs
-                        "<div class='error-log' ng-if='vm.errorLog(2)'>{{vm.errorLog(2).message}}</div>"+
+                        "<div class='error-log' ng-if='vm.errorLog(2)'><i class='fa fa-chain-broken' aria-hidden='true'></i>{{vm.errorLog(2).message}}</div>"+
                         // Contacts
                         "<ul ng-if='!vm.errorLog(2)' class='chat-contact-list' infinite-scroll='vm.getContacts()'>"+
                             "<li ng-repeat='contact in contactlist = (vm.contacts | filter: searchBy.text | orderBy: \"-messageDate\")' chat-popover popover-items='contact.participant[0]' popover-placement='left' popover-content='vm.popoverContactTpl' class='animate-list' ng-class=\"{'has-unread': contact.unreadMessages > 0, 'has-popup': contact.popupActive}\" ng-click='openPopup(contact)'>"+
@@ -58,35 +59,35 @@
                                     "<span class='contact-photo'><img dummy-image='contact.participant[0].photo' dummy-text='contact.participant[0].name'></span><span chat-status='contact.participant[0].status'></span>"+
                                 "</div>"+
                                 "<div class='right'>"+
-                                    "<h4 class='contact-name' ng-bind-html='contact.participant[0].name | trim:true:28 | highlight:searchBy.text'></h4>"+
-                                    "<div class='contact-last-message' ng-bind-html='contact.lastMessage | trim:true:28 | html'></div>"+
+                                    "<h4 class='contact-name' ng-bind-html='contact.participant[0].name | trim:true:35 | highlight:searchBy.text'></h4>"+
+                                    "<div class='contact-last-message' ng-bind-html='contact.lastMessage | trim:true:35 | colonToSmiley'></div>"+
                                 "</div>"+
                             "</li>"+
-                            "<div ng-show='!contactlist.length && vm.doneContacts && vm.searchResults.length' class='error-log'><i class='fa fa-users'></i>Você ainda não possui contatos</div>"+
+                            "<div ng-show='!contactlist.length && vm.doneContacts || !contactlist.length && vm.searchResults.length' class='error-log'><i class='fa fa-users'></i>Nenhum contato encontrado</div>"+
                             "<div chat-loader ng-show='vm.gettingContacts || !vm.doneContacts'></div>"+
                         "</ul>"+
                     "</div>"+
                     "<div class='chat-sidebar-footer'>"+
                         "<ul class='chat-navbar'>"+
-                            "<li class='active'><a href='#' ng-click=\"setActiveTab('contacts')\"><i class='fa fa-comments'></i></a></li>"+
-                            //"<li ng-if='!vm.errorLog(2)'><a href='#'><i class='fa fa-user'></i></a></li>"+
-                            //"<li><a href='#'><i class='fa fa-home'></i></a></li>"+
-                            //"<li><a href='#'><i class='fa fa-link'></i></a></li>"+
-                            //"<li><a href='#'><i class='fa ga-gaia-01'></i></a></li>"+
+                            "<li class='active'><a href='javascript:;' ng-click=\"setActiveTab('contacts')\"><i class='fa fa-comments'></i></a></li>"+
+                            //"<li ng-if='!vm.errorLog(2)'><a href='javascript:;'><i class='fa fa-user'></i></a></li>"+
+                            //"<li><a href='javascript:;'><i class='fa fa-home'></i></a></li>"+
+                            //"<li><a href='javascript:;'><i class='fa fa-link'></i></a></li>"+
+                            //"<li><a href='javascript:;'><i class='fa ga-gaia-01'></i></a></li>"+
                         "</ul>"+
                     "</div>"+
                 "</div>"+
-                "<div class='chat-popup-container' ng-transclude>"+
-                    //"<div class='popup-group' title='testet' chat-popover popover-placement='top'><i class='fa fa-comments'></i><span class='popup-group-count'>3 {{vm.contacts[0].participant[0].name}}<span></div>"+
-                    "<div ng-show='vm.popupsGrouped.length' class='popup-group' popup-group='vm.popupsGrouped' popup-group-unreads='vm.groupedUnreads'></div>"+
+                "<div class='chat-popup-container'>"+
+                    // POPUPS
                     "<div ng-repeat='popup in vm.popups track by popup.roomId' chat-popup='popup' popup-index='$index'></div>"+
+                    // POPUPS GROUP
+                    "<div ng-show='vm.popupsGrouped.length' class='popup-group' popup-group='vm.popupsGrouped' popup-group-unreads='vm.groupedUnreads'></div>"+
                 "</div>";
 
             return {
                 restrict: 'EA',
                 template: template,
                 replace: false,
-                transclude: true,
                 scope: {
                     profile: '=chatProfile'
                 },
@@ -94,8 +95,15 @@
 
                     var vm = this;
 
-                    vm.popoverContactTpl =
-                                            "<div class='chat-contact-info'>" +
+                    vm.isConnected = ChatAPI.isConnected;
+                    vm.errors = [];
+                    vm.settings = {
+                        sound: false,
+                        notifications: false
+                    }
+
+                    // Sidebar contact popover with more information
+                    vm.popoverContactTpl =  "<div class='chat-contact-info'>" +
                                             "<div class='popover-media'><span class='contact-photo'><img dummy-image='items.photo' dummy-text='items.name' width='85' height='85'/></span></div>" +
                                             "<div class='contact-info'>" +
                                             "<h4 class='contact-name'>{{items.name}}</h4>" +
@@ -104,20 +112,22 @@
                                             "</div>" +
                                             "</div>";
 
-                    vm.chatConfig = {
-                        sound: false,
-                        notifications: false
-                    }
-
+                    // Default audio when receiving messages
                     var audio = new Audio('http://www.mscs.mu.edu/~mikes/174/demos/Win98sounds/Utopia%20Critical%20Stop.wav');
 
-                    vm.errors = [];
+                    // Shows specific error code
                     vm.errorLog = function(errorCode) {
                         var error = vm.errors.filter(function(error){
                             return error.code == errorCode;
                         });
                         return error[0];
                     }
+
+                    // Error message when chat connection fails
+                    $scope.$watch('vm.isConnected', function(n){
+                        if(!n)
+                            vm.errors.push({code: "1", message: 'Erro ao conectar ao chat. Por favor, tente mais tarde.'});
+                    })
 
                     // request permission on page load
                     document.addEventListener('DOMContentLoaded', function () {
@@ -143,10 +153,8 @@
                         }
                     }
 
-
-
+                    // Add watcher to profile id that should only change once indicating tha data is set
                     $scope.$watchCollection('profile.id', function(newVal) {
-
                         if (newVal != void 0) {
                             vm.profile = $scope.profile;
                             vm.contacts = [];
@@ -154,10 +162,26 @@
                             vm.popupsGrouped = [];
                             vm.groupedUnreads = 0;
 
-                            var cantactOptions = {
+                            // User profile data
+                            var userInfo = {
                                 id: vm.profile.id,
-                                limit: 10,
+                                limit: 20,
                                 offset: 0
+                            }
+
+                            // Check chat connection
+                            if(ChatAPI.isConnected) {
+                                // Get number of messages notifications
+                                ChatAPI.notify().get({id: userInfo.id}).$promise.then(
+                                    function (response) {
+                                        return $rootScope.chatNotifications = response.count;
+                                    }, function (err) {
+                                        $rootScope.chatNotifications = 0;
+                                        vm.errors.push({code: "1", message: 'Erro ao conectar ao chat'});
+                                    }
+                                );
+                            } else {
+                                //vm.errors.push({code: "1", message: 'Erro ao conectar ao chat'});
                             }
 
                             vm.removePopup = function (id) {
@@ -168,6 +192,8 @@
                             }
 
                             var blockRequest = false;
+
+                            // Request list of contacts
                             vm.getContacts = function(){
                                 if (vm.contactsCount > vm.contacts.length && !blockRequest) {
                                     var options = {
@@ -188,7 +214,7 @@
                                 }
                             }
 
-                            // Status
+                            // List of status options
                             vm.statusList = [
                                 {id: 1, name: 'Online', active: true},
                                 {id: 2, name: 'Ocupado', active: false},
@@ -196,6 +222,7 @@
                                 {id: 4, name: 'Ausente', active: false}
                             ];
 
+                            // Return status based on id parameter
                             vm.getStatus = function(statusId) {
                                 var status = vm.statusList.filter(function(sts) {
                                     return sts.id == statusId;
@@ -225,7 +252,7 @@
                                     });
 
                                     vm.doneContacts = false;
-                                    ChatAPI.contact().get(cantactOptions).$promise.then(function (response) {
+                                    ChatAPI.contact().get(userInfo).$promise.then(function (response) {
                                         vm.contactsCount = response.count;
                                         vm.contacts = response.data;
                                         vm.doneContacts = true;
@@ -237,9 +264,11 @@
                                         console.log('Error: ', err.statusText);
                                     });
 
+                                    // Search for contacts
                                     vm.searchContact = function(name, filterSize) {
                                         var options;
                                         vm.searchResult = [];
+                                        // Search for contacts inside current list, if is not found, request to server
                                         if (filterSize === 0) {
                                             options = {
                                                 id: vm.profile.id,
@@ -255,6 +284,7 @@
                                         }
                                     };
 
+                                    // Count the number of messages unread inside contacts grouped tab
                                     vm.getGroupUnreads = function() {
                                         $timeout(function(){
                                             if(vm.popupsGrouped.length){
@@ -267,11 +297,12 @@
                                         }, 500);
                                     }
 
-                                    vm.proxy.on("receiveMessage", function (roomId, sourceId, message, increment) {                                                                                
+                                    // Append new message from contact to popup
+                                    vm.proxy.on("receiveMessage", function (roomId, sourceId, message, increment) {
                                         vm.getGroupUnreads();
 
                                         // Play sound if is enable and message came from contact
-                                        if(vm.chatConfig.sound && sourceId != vm.profile.id)
+                                        if(vm.settings.sound && sourceId != vm.profile.id)
                                             audio.play();
 
                                         var contact = vm.contacts.filter(function (c) {
@@ -285,7 +316,7 @@
                                                     contact[0].unreadMessages++;
                                                     $rootScope.chatNotifications++;
                                                 });
-                                                if(vm.chatConfig.notifications)
+                                                if(vm.settings.notifications)
                                                     notifyMe(contact[0].participant[0], message.message);
                                             }, 0)
                                         }
@@ -293,12 +324,13 @@
                                         vm.popups.forEach(function(popup){
                                             if (popup.roomId === roomId) {
                                                 popup.messages.splice(0, 0, message);
-                                                return true;                                                                                
+                                                return true;
                                             }
                                         });
-                                       
+
                                     });
 
+                                    // Notify user when contact is typing from the other side
                                     vm.proxy.on("receiveTyping", function (data, roomId, sourceId) {
                                         var contact = vm.contacts.filter(function (c) {
                                             return c.participant[0].id == sourceId;
@@ -312,23 +344,23 @@
                                                     contact[0].lastMessage = data + '...';
                                                     $timeout(function () {
                                                         contact[0].lastMessage = lastMessage;
-                                                    }, 1000);
+                                                    }, 500);
                                                 });
                                             }
                                         }
 
                                         vm.popups.forEach(function(popup){
-                                            if (popup.roomId === roomId && sourceId !== $scope.profile.id) {                                                
-                                                popup.typing = data;                                                
-                                                $timeout(function () {                                                  
-                                                    popup.typing = false;                                                   
+                                            if (popup.roomId === roomId && sourceId !== $scope.profile.id) {
+                                                popup.typing = data;
+                                                $timeout(function () {
+                                                    popup.typing = false;
                                                 }, 2000);
                                                 return true;
                                             }
                                         });
-
                                     });
 
+                                    // Sets all unread messages as read
                                     vm.proxy.on("updateReadMessage", function (userId, systemType, date) {
                                         vm.popups.forEach(function (popup) {
                                             popup.messages.forEach(function(message){
@@ -336,10 +368,11 @@
                                                     if (message.notification[0].readDate == void 0 || message.notification[0].readDate == null)
                                                         message.notification[0].readDate = date;
                                                 }
-                                            });                                            
+                                            });
                                         });
                                     });
 
+                                    // Watch for status change
                                     vm.proxy.on("userStatus", function(data) {
                                         return $scope.$apply(function() {
                                             angular.forEach(vm.contacts, function(contact) {
@@ -348,6 +381,18 @@
                                                 }
                                             });
                                         });
+                                    });
+
+                                    // Push new contact to the list
+                                    vm.proxy.on("updateContactList", function(contact) {
+                                        // Remove logged user from response
+                                        contact.participant.splice(0, 1);
+
+                                        return $scope.$apply(function() {
+                                            // Append new contact to the list
+                                            vm.contacts.splice(0, 0, contact);
+                                        });
+
                                     });
                                 }
                             } catch(e){
@@ -420,11 +465,18 @@
 
                     scope.toggleChat = function() {
                         element.toggleClass('open closed')
-                        if(element.hasClass('open'))
-                            $('body').addClass('has-chat-sidebar-active')
-                        else
-                            $('body').removeClass('has-chat-sidebar-active')
+                        if(element.hasClass('open')) {
+                            element.addClass('open').removeClass('closed');
+                            $('body').addClass('has-chat-sidebar-active');
+                        } else {
+                            element.addClass('closed').removeClass('open');
+                            $('body').removeClass('has-chat-sidebar-active');
+                        }
                     }
+
+                    // Add flat class to body elemento if chat started open
+                    if(element.hasClass('open'))
+                        $('body').addClass('has-chat-sidebar-active')
 
                     // MOBILE =======================================
                     attrs.$observe('chatAttachTo', function(el){
@@ -449,6 +501,7 @@
                         }
                     });
 
+                    // Toggle sidebar
                     attrs.$observe('chatToggle', function(el){
                         if(el) {
                             $(el).on("click", function() {
@@ -456,6 +509,13 @@
                             })
                         }
                     });
+
+                    // Shrink sidebar when user click in a popup box
+                    element.on('mouseenter', '.chat-body', function () {
+                            element.removeClass('narrow-sidebar');
+                            $('body').removeClass('narrow-sidebar');
+                        }
+                    );
                 }
             }
         }]);

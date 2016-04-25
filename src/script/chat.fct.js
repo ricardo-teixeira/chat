@@ -2,9 +2,20 @@
     angular.module('ValueChat')
         .factory('ChatAPI', ['$resource', function($resource) {
 
+            function getCookie(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for(var i=0; i<ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0)==' ') c = c.substring(1);
+                    if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+                }
+                return "";
+            }
+
             var signalr_url, webapi_token;
-            signalr_url = $.cookie('gaiainc_signalr_url');
-            webapi_token = $.cookie('gaiainc_webapi_token');
+            signalr_url = decodeURIComponent(getCookie('gaiainc_signalr_url'));
+            webapi_token = getCookie('gaiainc_webapi_token');
 
             if ((($.connection != null) && $.connection !== 0) && signalr_url !== void 0 && webapi_token !== void 0) {
                 return {
@@ -97,6 +108,7 @@
                         };
                         return $.connection.hub.start(options);
                     },
+                    isConnected: true,
                     reconnect: function() {
                         console.log("reconnecting");
                         return $resource("" + signalr_url, {
@@ -105,8 +117,10 @@
                     }
                 };
             } else {
-                console.log("Erro ao connectar com o chat");
-                return false;
+                console.log("Erro ao connectar com o chat. Hubs ou SignalR indisponíveis.");
+                return {
+                    isConnected: false
+                };
             }
         }
         ]);

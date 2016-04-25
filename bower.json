@@ -1,11 +1,16 @@
 {
   "name": "angular-chat-directive",
-  "homepage": "https://github.com/I-Value/GaiaInc",
-  "authors": [
-    "I-Value"
+  "version": "v1.0.0",
+  "homepage": "https://github.com/ricardo-teixeira/chat",
+  "description": "Angular Chat with SignalR API",
+  "main": ["chat-sidebar.drv.js"],
+  "keywords": [
+    "angular",
+    "chat"
   ],
-  "description": "",
-  "main": "",
+  "authors": [
+    "Ricardo Teixeira"
+  ],
   "moduleType": [],
   "license": "MIT",
   "private": true,
@@ -13,7 +18,7 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "vendor/components",
+    ".sass-cache",
     "test",
     "tests"
   ],
@@ -23,9 +28,9 @@
     "gaia-fontawesome": "*",
     "angular-sanitize": "^1.5.0",
     "angular-resource": "^1.5.0",
-    "jquery.cookie": "^1.4.1",
     "angular-moment": "~0.6.2",
     "moment": "~2.5.1",
-    "angular-animate": "^1.5.2"
+    "angular-animate": "^1.5.2",
+    "angular-chat-emoji-popup": "*"
   }
 }

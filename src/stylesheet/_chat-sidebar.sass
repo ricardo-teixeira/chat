@@ -99,33 +99,31 @@
   color: $chat-secondary
 
 .chat-sidebar
+  background-color: $chat-primary
   position: fixed
   z-index: 100
   top: 0
+  right: -100%
   bottom: 0
-  width: 300px
+  width: 310px
   min-height: 360px
   font-size: 16px
   background-color: $chat-primary
   color: $chat-text
-  -webkit-animation-duration: 0.4s
-  animation-duration: 0.4s
-  -webkit-animation-fill-mode: both
-  animation-fill-mode: both
-  //transition: 0.3s ease
+  transition: width 0.4s ease, right 0.4s ease
+  -webkit-transition: width 0.4s ease, right 0.4s ease
+  -webkit-box-shadow: 0px 1px 2px $chat-primary-dark inset
+  -moz-box-shadow: 0px 1px 2px $chat-primary-dark inset
+  box-shadow: 0px 1px 2px $chat-primary-dark inset
   @media (max-width: 768px)
-    top: 0 !important
+    //top: 0 !important
     width: 100%
   @media (min-width: 768px)
     border-left: 1px solid lighten($chat-primary, 10%)
   &.open
     right: 0
-    -webkit-animation-name: chatSlideInRight
-    animation-name: chatSlideInRight
   &.closed
-    right: 0
-    -webkit-animation-name: chatSlideOutRight
-    animation-name: chatSlideOutRight
+    right: -100%
   a
     color: $chat-text-inverse
     &:hover
@@ -135,13 +133,11 @@
     position: relative
     height: 100%
     .chat-sidebar-header
-      background-color: $chat-primary
-      border-top: 2px solid $chat-secondary
       float: left
       width: 100%
       margin: 0
       border-bottom: 1px solid $chat-border-light
-      height: 59px
+      height: 57px
       .chat-navbar
         > li
           > a
@@ -156,6 +152,8 @@
       position: relative
       height: 100%
       padding-bottom: 104px
+      .chat-loader
+        margin-top: 30px
       .search-input:focus
         box-shadow: none
       .chat-contact-list
@@ -165,6 +163,8 @@
             position: absolute
             left: 18px
             bottom: 10px
+      .chat-loader-container.first .chat-loader-path
+        fill: $chat-primary
     .chat-sidebar-footer
       background-color: $chat-primary-dark
       border-top: 1px solid $chat-border-light
@@ -268,8 +268,6 @@
   align-items: center
   justify-content: center
   .chat-loader-container
-    animation: rotate 2s linear infinite
-    -webkit-animation: rotate 2s linear infinite
     .chat-loader-path
       stroke: $chat-secondary
       stroke-width: 6px
@@ -281,28 +279,28 @@
       r: 21px
       fill: none
     &.first
+      animation: rotate 3s linear infinite
+      -webkit-animation: rotate 3s linear infinite
       position: relative
       z-index: 1
-      background: inherit
+      .chat-loader-path
+        stroke: #fff
     &.second
       position: relative
       top: -10px
-      left: -7%
-      .chat-loader-path
-        stroke: #fff
-
-.chat-sidebar .chat-body
-  .chat-loader-container.first .chat-loader-path
-    fill: $chat-primary
+      left: -20px
 
 // ERRORS
 .error-log
   text-align: center
   padding: 15px 10px
   color: $chat-secondary
+  font-size: 18px
+  margin-top: 30px
   .fa
     display: block
     font-size: 2rem
+    margin-bottom: 10px
 
 
 // Popover
@@ -415,9 +413,8 @@
   li
     position: relative
     display: block
-    overflow: hidden
-    -webkit-transition: 0.3s ease
-    transition: 0.3s ease
+    -webkit-transition: background 0.3s ease
+    transition: background 0.3s ease
     .left
       position: relative
       display: table-cell
@@ -434,6 +431,9 @@
     .contact-photo
       width: 40px
       height: 40px
+      -webkit-box-shadow: 0px 0px 4px lighten($chat-primary, 15%)
+      -moz-box-shadow: 0px 0px 4px lighten($chat-primary, 15%)
+      box-shadow: 0px 0px 4px lighten($chat-primary, 15%)
       img
         min-width: 40px
         min-height: 40px
@@ -466,3 +466,25 @@
     z-index: 120
     .chat-popover
       display: none !important
+
+// Narrow Sidebar
+@media (min-width: 769px)
+  .chat-sidebar.narrow-sidebar
+    right: -240px
+    -webkit-transition: right 0.3s ease
+    transition: right 0.3s ease
+    .chat-sidebar-container
+      .chat-sidebar-header
+        display: none
+      .chat-body
+        padding-bottom: 45px
+        .chat-contact-list
+          .has-unread
+            background-color: $chat-secondary
+            border-left: 0
+          .left
+            padding: 11px 15px 11px 15px
+            .chat-status-indicator
+              left: 12px
+      .chat-sidebar-footer .chat-navbar li > a
+        padding: 12px 26px
