@@ -298,7 +298,7 @@
                                     }
 
                                     // Append new message from contact to popup
-                                    vm.proxy.on("receiveMessage", function (roomId, sourceId, message, increment) {
+                                    vm.proxy.on("receiveMessage", function (roomId, sourceId, message, increment) {                                                                                
                                         vm.getGroupUnreads();
 
                                         // Play sound if is enable and message came from contact
@@ -324,10 +324,10 @@
                                         vm.popups.forEach(function(popup){
                                             if (popup.roomId === roomId) {
                                                 popup.messages.splice(0, 0, message);
-                                                return true;
+                                                return true;                                                                                
                                             }
                                         });
-
+                                       
                                     });
 
                                     // Notify user when contact is typing from the other side
@@ -350,10 +350,10 @@
                                         }
 
                                         vm.popups.forEach(function(popup){
-                                            if (popup.roomId === roomId && sourceId !== $scope.profile.id) {
-                                                popup.typing = data;
-                                                $timeout(function () {
-                                                    popup.typing = false;
+                                            if (popup.roomId === roomId && sourceId !== $scope.profile.id) {                                                
+                                                popup.typing = data;                                                
+                                                $timeout(function () {                                                  
+                                                    popup.typing = false;                                                   
                                                 }, 2000);
                                                 return true;
                                             }
@@ -368,7 +368,7 @@
                                                     if (message.notification[0].readDate == void 0 || message.notification[0].readDate == null)
                                                         message.notification[0].readDate = date;
                                                 }
-                                            });
+                                            });                                            
                                         });
                                     });
 
