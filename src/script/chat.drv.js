@@ -7,7 +7,7 @@
                 "<div class='popup-box chat-popup slim-scrollbar' ng-class=\"{'popup-on': popup.unreadMessages > 0, 'popup-closed': !popup.toggle}\">"+
                 "<div class='popup-head'>"+
                 "<ul class='popup-head-left chat-navbar left'>"+
-                "<li><a class='chat-navbar-brand' href='javascript:;' title='{{popup.participant[0].name}}'><span chat-status='popup.participant[0].status'></span> {{popup.participant[0].name | trim:true:14}}</a></li>"+
+                "<li><a class='chat-navbar-brand' href='javascript:;' title='{{popup.participant[0].name}}'><span chat-status='popup.participant[0].status'></span> {{popup.participant[0].name | trim:true:14}}<div loading-dots ng-if='popup.typing'></div></a></li>"+
                 "</ul>"+
                 "<div class='popup-head-right'>"+
                 "<ul class='chat-navbar popup-head-buttons right'>"+
@@ -41,14 +41,10 @@
                                 "</span>"+
                             "</div>"+
                         "</div>"+
-                        "<div class='direct-chat-msg direct-typing-message user' ng-show='popup.typing')>"+
+                        "<div class='direct-chat-msg direct-typing-message user' ng-show='popup.typing'>"+
                             "<img alt='message user image' class='direct-chat-img' dummy-image='popup.participant[0].photo' dummy-text='popup.participant[0].name'>"+
                             "<div class='direct-chat-text'>"+
-                                "<div class='loading-dots'>"+
-                                    "<span></span>"+
-                                    "<span></span>"+
-                                    "<span></span>"+
-                                "</div>"+
+                                "<div loading-dots></div>"+
                             "</div>"+
                         "</div>"+
                     "</div>"+
@@ -464,26 +460,6 @@
             };
         })
 
-        // FILTERS =============================
-        .filter('trim', function () {
-            return function (value, wordwise, max, tail) {
-                if (!value) return '';
-
-                max = parseInt(max, 10);
-                if (!max) return value;
-                if (value.length <= max) return value;
-
-                value = value.substr(0, max);
-                if (wordwise) {
-                    var lastspace = value.lastIndexOf(' ');
-                    if (lastspace != -1) {
-                        value = value.substr(0, lastspace);
-                    }
-                }
-                return value + (tail || '…');
-            };
-        })
-
         .directive("chatForm", function() {
             return {
                 restrict: 'A',
@@ -514,6 +490,14 @@
                 });
             };
         }])
+
+        .directive('loadingDots', function() {
+            return {
+                restrict: 'EA',
+                replace: true,
+                template: '<div class="loading-dots"><span></span><span></span><span></span></div>'
+            };
+        })
 
         .directive('infiniteScroll', [
             '$timeout', function($timeout) {
@@ -742,6 +726,26 @@
                 }
             };
         }])
+
+        // FILTERS =============================
+        .filter('trim', function () {
+            return function (value, wordwise, max, tail) {
+                if (!value) return '';
+
+                max = parseInt(max, 10);
+                if (!max) return value;
+                if (value.length <= max) return value;
+
+                value = value.substr(0, max);
+                if (wordwise) {
+                    var lastspace = value.lastIndexOf(' ');
+                    if (lastspace != -1) {
+                        value = value.substr(0, lastspace);
+                    }
+                }
+                return value + (tail || '…');
+            };
+        })
 
         // HIGHLIGHT TEXT IN SEARCH FILTER
         .filter('highlight', ['$sce', function($sce) {

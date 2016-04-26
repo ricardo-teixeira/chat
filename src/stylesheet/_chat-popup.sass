@@ -6,7 +6,7 @@
 // EMOJI MENU (overriding)
 body .emoji-menu
   margin-left: -23px
-  margin-top: -269px
+  margin-top: -271px
 
 .chat-popup
   -webkit-animation-duration: 0.4s
@@ -20,6 +20,13 @@ body .emoji-menu
         content: "\f106"
     .popup-messages, .popup-messages-footer
       display: none
+    .popup-head .loading-dots
+      display: inline-block !important
+      margin-left: 5px
+      > span
+        background: #FFF
+        width: 4px
+        height: 4px
   &.popup-on .popup-head
     animation: colorPulse 1s 4
     -webkit-animation: colorPulse 1s 4
@@ -59,6 +66,8 @@ body .emoji-menu
     min-height: 50px
     box-shadow: 0px 0px 4px darken($chat-primary-dark, 25%)
     -moz-box-shadow: 0px 0px 4px darken($chat-primary-dark, 25%)
+    .loading-dots
+      display: none !important
     &.popup-on
       animation: colorPulse 1s 4
       -webkit-animation: colorPulse 1s 4
@@ -182,7 +191,7 @@ body .emoji-menu
     background: #fff
     border: 0
     font-size: 1.5em
-    color: lighten(#7A7A7A, 10%)
+    color: lighten(#7A7A7A, 25%)
     &:hover
       color: #7A7A7A
   > textarea, .emoji-wysiwyg-editor
@@ -190,7 +199,7 @@ body .emoji-menu
     -moz-display: inline-flex
     display: inline-flex
     vertical-align: middle
-    padding-top: 15px
+    padding-top: 16px
     font-size: 14px
     color: #7A7A7A
     background-color: #FFF
@@ -203,7 +212,13 @@ body .emoji-menu
     margin: 0
     overflow-y: auto
     &:focus
-      border: 1px solid $chat-info
+      border: 1px solid $chat-background
+      border: 1px solid $chat-background
+      -webkit-box-shadow: 0px 0px 5px $chat-background inset
+      -moz-box-shadow: 0px 0px 5px $chat-background inset
+      box-shadow: 0px 0px 5px $chat-background inset
+    &:hover
+      cursor: text
 
 .direct-chat-messages
   padding: 15px
