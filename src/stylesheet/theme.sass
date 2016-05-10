@@ -1,0 +1,193 @@
+@import "variables"
+
+// Animations
+.loading-dots
+  span
+    background: $status-online
+
+// Popup
+.chat-popup
+  &.popup-on .popup-head
+    background-color: $chat-secondary
+    .chat-navbar
+      > li
+        &.active > a
+          background-color: $chat-secondary-dark
+        > a
+          &:hover
+            background-color: $chat-secondary-dark
+
+.popup-group
+  background: $chat-primary
+  &:hover
+    background-color: $chat-primary-dark
+  .popup-head
+    color: $chat-text-inverse
+    box-shadow: 0px 0px 4px darken($chat-primary-dark, 25%)
+    -moz-box-shadow: 0px 0px 4px darken($chat-primary-dark, 25%)
+    &.popup-on
+      background-color: $chat-secondary
+
+.popup-box
+  .popup-head
+    background-color: $chat-primary
+  .popup-messages
+    .direct-chat-info
+      color: $chat-info
+    .direct-chat-name
+      color: $chat-text-inverse
+    .error-log
+      background: $chat-primary
+
+.popup-messages-footer
+  > textarea, .emoji-wysiwyg-editor
+    &:focus
+      border: 1px solid $chat-background
+      border: 1px solid $chat-background
+      -webkit-box-shadow: 0px 0px 5px $chat-background inset
+      -moz-box-shadow: 0px 0px 5px $chat-background inset
+      box-shadow: 0px 0px 5px $chat-background inset
+
+// Sidebar
+.chat-navbar
+  > li
+    &.active
+      > a
+        border-bottom: 1px solid $chat-primary-dark
+    &.active, &:hover
+      > a
+        background-color: $chat-primary-dark
+    > a
+      color: $chat-text-inverse
+      &:hover
+        background-color: $chat-primary-dark
+      &.chat-navbar-brand
+        color: $chat-text-inverse
+
+.chat-status-indicator
+  &.online
+    background: $status-online
+  &.offline
+    background: $status-offline
+  &.busy
+    background: $status-busy
+  &.away
+    background: $status-away
+
+.highlighted
+  color: $chat-secondary
+
+.chat-sidebar
+  background-color: $chat-primary
+  background-color: $chat-primary
+  color: $chat-text
+  -webkit-box-shadow: 0px 1px 2px $chat-primary-dark inset
+  -moz-box-shadow: 0px 1px 2px $chat-primary-dark inset
+  box-shadow: 0px 1px 2px $chat-primary-dark inset
+  @media (min-width: 768px)
+    border-left: 1px solid lighten($chat-primary, 10%)
+  a
+    color: $chat-text-inverse
+    &:hover
+      color: $chat-text
+  .chat-sidebar-container
+    .chat-sidebar-header
+      border-bottom: 1px solid $chat-border-light
+    .chat-body
+      .chat-loader-container.first .chat-loader-path
+        fill: $chat-primary
+    .chat-sidebar-footer
+      background-color: $chat-primary-dark
+      border-top: 1px solid $chat-border-light
+      .chat-navbar
+        > li
+          > a:hover
+            background-color: $chat-primary
+            border-top: 1px solid $chat-primary
+          &.active
+            > a
+              background-color: $chat-primary
+
+// POPOVER
+.chat-contact-info
+  .contact-email
+    color: $chat-icon
+
+.tab-content
+  background-color: $chat-primary-dark
+
+// LOADER
+.web-loader
+  .web-loader-container
+    .web-loader-path
+      stroke: $chat-secondary
+
+.chat-loader
+  .chat-loader-container
+    .chat-loader-path
+      stroke: $chat-secondary
+
+// ERRORS
+.error-log
+  color: $chat-secondary
+
+// Popover
+.chat-popover
+  background-color: $chat-primary
+  border-color: $chat-secondary !important
+  box-shadow: 0px 0px 4px darken($chat-primary-dark, 25%)
+  -moz-box-shadow: 0px 0px 4px darken($chat-primary-dark, 25%)
+  label
+    color: $chat-text !important
+  .popover-content
+    .chat-contact-list li
+      .chat-popup-close
+        color: $chat-icon
+        &:hover
+          color: $chat-icon-dark
+  &.top
+    .arrow
+      border-top-color: $chat-secondary
+      &:after
+        border-top-color: $chat-secondary
+  &.bottom
+    .arrow
+      border-bottom-color: $chat-secondary
+      &:after
+        border-bottom-color: $chat-secondary
+  &.right
+    .arrow
+      border-right-color: $chat-secondary
+      &:after
+        border-right-color: $chat-secondary
+  &.left
+    .arrow
+      border-left-color: $chat-secondary
+      &:after
+        border-left-color: $chat-secondary
+
+.chat-contact-list
+  li
+    .contact-photo
+      -webkit-box-shadow: 0px 0px 4px lighten($chat-primary, 15%)
+      -moz-box-shadow: 0px 0px 4px lighten($chat-primary, 15%)
+      box-shadow: 0px 0px 4px lighten($chat-primary, 15%)
+    &:hover
+      background-color: $chat-primary-dark
+    &.has-unread
+      border-left: 4px solid $chat-secondary
+      .contact-name
+        color: $chat-text-inverse
+      .contact-last-message
+        color: $chat-icon
+    &.has-popup
+      background-color: $chat-primary-dark
+
+// Narrow Sidebar
+@media (min-width: 769px)
+  .chat-sidebar.narrow-sidebar
+    .chat-sidebar-container
+      .chat-body
+        .chat-contact-list
+          .has-unread
+            background-color: $chat-secondary

@@ -9,6 +9,7 @@ var gulp = require('gulp'),
 
 // Scripts Task
 gulp.task('scripts', function(){
+	// Minify
 	gulp.src(['src/script/chat.mdl.js', 'src/script/chat.drv.js', 'src/script/chat.fct.js'])
 		.pipe(plumber())
 		.pipe(uglify())
@@ -18,7 +19,8 @@ gulp.task('scripts', function(){
 
 // Styles Task
 gulp.task('styles', function(){
-    sass('src/**/*.sass')
+	// Minify
+    sass(['src/**/*.sass', '!src/stylesheet/theme.sass'])
         .on('error', sass.logError)
         .pipe(cssmin())
 		.pipe(concat('chat.min.css'))
@@ -26,11 +28,33 @@ gulp.task('styles', function(){
 	}
 );
 
+// Generate theme
+gulp.task('theme', function(){
+    sass('src/stylesheet/theme.sass')
+        .on('error', sass.logError)
+		.pipe(concat('theme.css'))
+        .pipe(gulp.dest('dist/css'));
+	}
+);
+
+// Uncompressed
+gulp.task('compile', function(){
+	gulp.src(['src/script/chat.mdl.js', 'src/script/chat.drv.js', 'src/script/chat.fct.js'])
+		.pipe(concat('chat.js'))
+		.pipe(gulp.dest('src/script'));
+
+    sass('src/stylesheet/chat-app.sass')
+        .on('error', sass.logError)
+		.pipe(concat('chat.css'))
+        .pipe(gulp.dest('src/stylesheet'));
+	}
+);
+
 //  Watch Task
 gulp.task('watch', function(){
 	gulp.watch('src/**/*.js', ['scripts']);
-	gulp.watch('src/**/*.css', ['styles']);
-	gulp.watch('src/**/*.sass', ['styles']);
+	gulp.watch(['src/**/*.sass', 'src/**/*.css'], ['styles', 'theme']);
+	gulp.watch(['src/**/*.js', 'src/**/*.sass'], ['compile']);
 });
 
-gulp.task('default', ['scripts', 'styles', 'watch']);
+gulp.task('default', ['scripts', 'styles', 'compile', 'theme', 'watch']);

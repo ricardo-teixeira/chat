@@ -1,0 +1,148 @@
+.loading-dots span {
+  background: #3BA36E; }
+
+.chat-popup.popup-on .popup-head {
+  background-color: #F9525D; }
+  .chat-popup.popup-on .popup-head .chat-navbar > li.active > a {
+    background-color: #f7212f; }
+  .chat-popup.popup-on .popup-head .chat-navbar > li > a:hover {
+    background-color: #f7212f; }
+
+.popup-group {
+  background: #332526; }
+  .popup-group:hover {
+    background-color: #151010; }
+  .popup-group .popup-head {
+    color: #FFF;
+    box-shadow: 0px 0px 4px black;
+    -moz-box-shadow: 0px 0px 4px black; }
+    .popup-group .popup-head.popup-on {
+      background-color: #F9525D; }
+
+.popup-box .popup-head {
+  background-color: #332526; }
+.popup-box .popup-messages .direct-chat-info {
+  color: #00A2C2; }
+.popup-box .popup-messages .direct-chat-name {
+  color: #FFF; }
+.popup-box .popup-messages .error-log {
+  background: #332526; }
+
+.popup-messages-footer > textarea:focus, .popup-messages-footer .emoji-wysiwyg-editor:focus {
+  border: 1px solid #EEE;
+  border: 1px solid #EEE;
+  -webkit-box-shadow: 0px 0px 5px #EEE inset;
+  -moz-box-shadow: 0px 0px 5px #EEE inset;
+  box-shadow: 0px 0px 5px #EEE inset; }
+
+.chat-navbar > li.active > a {
+  border-bottom: 1px solid #151010; }
+.chat-navbar > li.active > a, .chat-navbar > li:hover > a {
+  background-color: #151010; }
+.chat-navbar > li > a {
+  color: #FFF; }
+  .chat-navbar > li > a:hover {
+    background-color: #151010; }
+  .chat-navbar > li > a.chat-navbar-brand {
+    color: #FFF; }
+
+.chat-status-indicator.online {
+  background: #3BA36E; }
+.chat-status-indicator.offline {
+  background: #A0AAAB; }
+.chat-status-indicator.busy {
+  background: #F9525D; }
+.chat-status-indicator.away {
+  background: #FAA732; }
+
+.highlighted {
+  color: #F9525D; }
+
+.chat-sidebar {
+  background-color: #332526;
+  background-color: #332526;
+  color: #DEDDD9;
+  -webkit-box-shadow: 0px 1px 2px #151010 inset;
+  -moz-box-shadow: 0px 1px 2px #151010 inset;
+  box-shadow: 0px 1px 2px #151010 inset; }
+  @media (min-width: 768px) {
+    .chat-sidebar {
+      border-left: 1px solid #513a3c; } }
+  .chat-sidebar a {
+    color: #FFF; }
+    .chat-sidebar a:hover {
+      color: #DEDDD9; }
+  .chat-sidebar .chat-sidebar-container .chat-sidebar-header {
+    border-bottom: 1px solid #8F9297; }
+  .chat-sidebar .chat-sidebar-container .chat-body .chat-loader-container.first .chat-loader-path {
+    fill: #332526; }
+  .chat-sidebar .chat-sidebar-container .chat-sidebar-footer {
+    background-color: #151010;
+    border-top: 1px solid #8F9297; }
+    .chat-sidebar .chat-sidebar-container .chat-sidebar-footer .chat-navbar > li > a:hover {
+      background-color: #332526;
+      border-top: 1px solid #332526; }
+    .chat-sidebar .chat-sidebar-container .chat-sidebar-footer .chat-navbar > li.active > a {
+      background-color: #332526; }
+
+.chat-contact-info .contact-email {
+  color: #04AAC4; }
+
+.tab-content {
+  background-color: #151010; }
+
+.web-loader .web-loader-container .web-loader-path {
+  stroke: #F9525D; }
+
+.chat-loader .chat-loader-container .chat-loader-path {
+  stroke: #F9525D; }
+
+.error-log {
+  color: #F9525D; }
+
+.chat-popover {
+  background-color: #332526;
+  border-color: #F9525D !important;
+  box-shadow: 0px 0px 4px black;
+  -moz-box-shadow: 0px 0px 4px black; }
+  .chat-popover label {
+    color: #DEDDD9 !important; }
+  .chat-popover .popover-content .chat-contact-list li .chat-popup-close {
+    color: #04AAC4; }
+    .chat-popover .popover-content .chat-contact-list li .chat-popup-close:hover {
+      color: #037f92; }
+  .chat-popover.top .arrow {
+    border-top-color: #F9525D; }
+    .chat-popover.top .arrow:after {
+      border-top-color: #F9525D; }
+  .chat-popover.bottom .arrow {
+    border-bottom-color: #F9525D; }
+    .chat-popover.bottom .arrow:after {
+      border-bottom-color: #F9525D; }
+  .chat-popover.right .arrow {
+    border-right-color: #F9525D; }
+    .chat-popover.right .arrow:after {
+      border-right-color: #F9525D; }
+  .chat-popover.left .arrow {
+    border-left-color: #F9525D; }
+    .chat-popover.left .arrow:after {
+      border-left-color: #F9525D; }
+
+.chat-contact-list li .contact-photo {
+  -webkit-box-shadow: 0px 0px 4px #5f4547;
+  -moz-box-shadow: 0px 0px 4px #5f4547;
+  box-shadow: 0px 0px 4px #5f4547; }
+.chat-contact-list li:hover {
+  background-color: #151010; }
+.chat-contact-list li.has-unread {
+  border-left: 4px solid #F9525D; }
+  .chat-contact-list li.has-unread .contact-name {
+    color: #FFF; }
+  .chat-contact-list li.has-unread .contact-last-message {
+    color: #04AAC4; }
+.chat-contact-list li.has-popup {
+  background-color: #151010; }
+
+@media (min-width: 769px) {
+  .chat-sidebar.narrow-sidebar .chat-sidebar-container .chat-body .chat-contact-list .has-unread {
+    background-color: #F9525D; } }
