@@ -5,6 +5,17 @@
   span
     background: $status-online
 
+// Scrollbar
+.slim-scrollbar-dark
+  \::-webkit-scrollbar-track
+    background: darken($chat-primary, 2%)
+  \::-webkit-scrollbar-thumb
+    background: darken($chat-primary, 10%)
+    &:hover
+      background: darken($chat-primary, 20%)
+    &:active
+      background: darken($chat-primary, 20%)
+
 // Popup
 .chat-popup
   &.popup-on .popup-head
@@ -33,13 +44,16 @@
     background-color: $chat-primary
   .popup-messages
     .direct-chat-info
-      color: $chat-info
+      color: $chat-grey
     .direct-chat-name
       color: $chat-text-inverse
     .error-log
       background: $chat-primary
 
 .popup-messages-footer
+  .button
+    &.active
+      color: $chat-icon
   > textarea, .emoji-wysiwyg-editor
     &:focus
       border: 1px solid $chat-background
@@ -110,6 +124,8 @@
 
 // POPOVER
 .chat-contact-info
+  .contact-name
+    color: $chat-text-inverse
   .contact-email
     color: $chat-icon
 

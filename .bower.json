@@ -1,0 +1,47 @@
+{
+  "name": "angular-chat-directive",
+  "version": "1.0.4",
+  "homepage": "https://github.com/ricardo-teixeira/chat",
+  "description": "Angular Chat with SignalR API",
+  "main": [
+    "chat-sidebar.drv.js"
+  ],
+  "keywords": [
+    "angular",
+    "chat"
+  ],
+  "authors": [
+    "Ricardo Teixeira"
+  ],
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    ".sass-cache",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "fontawesome#~4.5.0",
+    "angular": "1.5.0",
+    "gaia-fontawesome": "*",
+    "angular-sanitize": "^1.5.0",
+    "angular-resource": "^1.5.0",
+    "angular-moment": "~0.6.2",
+    "moment": "~2.5.1",
+    "angular-animate": "^1.5.2",
+    "angular-chat-emoji-popup": "*"
+  },
+  "_release": "1.0.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.4",
+    "commit": "49eaeca20753e398667c272a17a33e3b720eef71"
+  },
+  "_source": "https://github.com/ricardo-teixeira/chat.git",
+  "_target": "*",
+  "_originalSource": "angular-chat-directive"
+}

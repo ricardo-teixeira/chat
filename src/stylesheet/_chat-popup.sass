@@ -144,7 +144,7 @@ body .emoji-menu
         border-bottom-width: 8px
         border-left-color: #FFF
     .direct-chat-info
-      color: $chat-info
+      color: $chat-grey
     .direct-chat-name
       font-size: 15px
       font-weight: 600
@@ -180,11 +180,11 @@ body .emoji-menu
   -webkit-box-shadow: 0px 0px 5px #CCC
   bottom: 0
   position: relative
-  [emoji-form]
+  .popup-text-box
     -webkit-display: flex
     -moz-display: flex
     display: flex
-  #emojibtn
+  .button
     display: table-cell
     vertical-align: middle
     padding: 12px
@@ -194,7 +194,16 @@ body .emoji-menu
     color: lighten(#7A7A7A, 25%)
     &:hover
       color: #7A7A7A
-  > textarea, .emoji-wysiwyg-editor
+    &.active
+      color: $chat-icon
+  #sendbtn
+    display: none
+    .fa
+      opacity: 0.2
+    &.active
+      .fa
+        opacity: 1
+  .popup-textarea, .emoji-wysiwyg-editor
     -webkit-display: inline-flex
     -moz-display: inline-flex
     display: inline-flex
@@ -211,6 +220,7 @@ body .emoji-menu
     resize: none
     margin: 0
     overflow-y: auto
+    overflow-x: hidden
     &:focus
       border: 1px solid $chat-background
       border: 1px solid $chat-background
@@ -278,5 +288,7 @@ body .emoji-menu
       display: none
     .popup-messages
       height: calc(100% - 100px)
+    #sendbtn
+      display: block !important
   .popup-group
     display: none

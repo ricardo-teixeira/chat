@@ -1,6 +1,15 @@
 .loading-dots span {
   background: #3BA36E; }
 
+.slim-scrollbar-dark ::-webkit-scrollbar-track {
+  background: #2d2122; }
+.slim-scrollbar-dark ::-webkit-scrollbar-thumb {
+  background: #151010; }
+  .slim-scrollbar-dark ::-webkit-scrollbar-thumb:hover {
+    background: black; }
+  .slim-scrollbar-dark ::-webkit-scrollbar-thumb:active {
+    background: black; }
+
 .chat-popup.popup-on .popup-head {
   background-color: #F9525D; }
   .chat-popup.popup-on .popup-head .chat-navbar > li.active > a {
@@ -22,12 +31,14 @@
 .popup-box .popup-head {
   background-color: #332526; }
 .popup-box .popup-messages .direct-chat-info {
-  color: #00A2C2; }
+  color: #6A6A6A; }
 .popup-box .popup-messages .direct-chat-name {
   color: #FFF; }
 .popup-box .popup-messages .error-log {
   background: #332526; }
 
+.popup-messages-footer .button.active {
+  color: #00A2C2; }
 .popup-messages-footer > textarea:focus, .popup-messages-footer .emoji-wysiwyg-editor:focus {
   border: 1px solid #EEE;
   border: 1px solid #EEE;
@@ -85,8 +96,10 @@
     .chat-sidebar .chat-sidebar-container .chat-sidebar-footer .chat-navbar > li.active > a {
       background-color: #332526; }
 
+.chat-contact-info .contact-name {
+  color: #FFF; }
 .chat-contact-info .contact-email {
-  color: #04AAC4; }
+  color: #00A2C2; }
 
 .tab-content {
   background-color: #151010; }
@@ -108,9 +121,9 @@
   .chat-popover label {
     color: #DEDDD9 !important; }
   .chat-popover .popover-content .chat-contact-list li .chat-popup-close {
-    color: #04AAC4; }
+    color: #00A2C2; }
     .chat-popover .popover-content .chat-contact-list li .chat-popup-close:hover {
-      color: #037f92; }
+      color: #00778f; }
   .chat-popover.top .arrow {
     border-top-color: #F9525D; }
     .chat-popover.top .arrow:after {
@@ -139,7 +152,7 @@
   .chat-contact-list li.has-unread .contact-name {
     color: #FFF; }
   .chat-contact-list li.has-unread .contact-last-message {
-    color: #04AAC4; }
+    color: #00A2C2; }
 .chat-contact-list li.has-popup {
   background-color: #151010; }
 

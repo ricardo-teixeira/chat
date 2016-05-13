@@ -1,13 +1,13 @@
 (function() {
     // CHAT POPUP
     angular.module('ValueChat')
-        .directive('chatPopup', ['ChatAPI', '$rootScope', '$timeout', '$filter', '$window', function(ChatAPI, $rootScope, $timeout, $filter, $window) {
+        .directive('chatPopup', ['ChatAPI', '$rootScope', '$timeout', '$filter', '$sanitize', function(ChatAPI, $rootScope, $timeout, $filter, $sanitize) {
 
             var template =
                 "<div class='popup-box chat-popup slim-scrollbar' ng-class=\"{'popup-on': popup.unreadMessages > 0, 'popup-closed': !popup.toggle}\">"+
                 "<div class='popup-head'>"+
                 "<ul class='popup-head-left chat-navbar left'>"+
-                "<li><a class='chat-navbar-brand' href='javascript:;' title='{{popup.participant[0].name}}'><span chat-status='popup.participant[0].status'></span> {{popup.participant[0].name | trim:true:14}}<div loading-dots ng-if='popup.typing'></div></a></li>"+
+                "<li><a class='chat-navbar-brand' href='javascript:;' title='{{popup.participant[0].name}}'><span chat-status='popup.participant[0].status'></span> {{popup.participant[0].name | trim:true:21}}<div loading-dots ng-if='popup.typing'></div></a></li>"+
                 "</ul>"+
                 "<div class='popup-head-right'>"+
                 "<ul class='chat-navbar popup-head-buttons right'>"+
@@ -51,13 +51,23 @@
                     "<div ng-show='errorLog(3)' class='error-log'>{{errorLog(3).message}}</div>"+
                 "</div>"+
                 "<div class='popup-messages-footer'>"+
-                    '<div emoji-form emoji-message="emojiMessage" ng-click="setReadMessages()" ng-keypress="isTyping($event)" ng-disabled="errorLog(3)">'+
-                        '<button id="emojibtn">'+
+                    // Browsers that support emoji
+                    '<div ng-if="isSupported" class="popup-text-box" emoji-form emoji-message="emojiMessage" ng-click="setReadMessages()" ng-keypress="isTyping($event)" ng-disabled="errorLog(3)">'+
+                        '<button id="emojibtn" class="button">'+
                             '<i class="fa fa-smile-o" aria-hidden="true"></i>'+
                         '</button>'+
                         '<textarea id="messageInput" ng-model="emojiMessage.messagetext" placeholder="Enviar uma mensagem"></textarea>'+
+                        '<button id="sendbtn" class="button" ng-click="sendMessage()">'+
+                            '<i class="fa fa-send" aria-hidden="true"></i>'+
+                        '</button>'+
                     '</div>'+
-                    //"<textarea chat-form chat-form-submit='sendMessage()' cols='40' name='message' placeholder='Enviar uma mensagem' rows='10' ng-model='popup.newMessage' ng-keypress='isTyping($event)' ng-click='setReadMessages()' ng-disabled='errorLog(3)'></textarea>"+
+                    // Browsers that does't support emoji correctly
+                    '<div ng-if="!isSupported" class="popup-text-box">' +
+                        '<textarea class="popup-textarea" cols="40" name="message" placeholder="Enviar uma mensagem" rows="10" ng-model="emojiMessage.messagetext" ng-keypress="isTyping($event)" ng-click="setReadMessages()" ng-disabled="errorLog(3)"></textarea>' +
+                        '<button id="sendbtn" class="button" ng-click="sendMessage()">' +
+                            '<i class="fa fa-send" aria-hidden="true"></i>' +
+                        '</button>' +
+                    '</div>' +
                 "</div>"+
                 "</div>";
 
@@ -71,7 +81,7 @@
                 },
                 replace: true,
                 tranclude: true,
-                controller: ['$scope', '$filter', '$sanitize', 'ChatAPI', function($scope, $filter, $sanitize, ChatAPI){
+                controller: ['$scope', '$filter', 'ChatAPI', function($scope, $filter, ChatAPI){
 
                     var optionsMsg = {
                         roomId: $scope.popup.roomId,
@@ -92,6 +102,7 @@
                 link: function(scope, element, attrs, ctrl) {
 
                     scope.profile = ctrl.profile;
+                    scope.isSupported = ctrl.browser.support;
 
                     scope.errors = [];
                     scope.errorLog = function (errorCode) {
@@ -103,7 +114,9 @@
 
                     scope.emojiMessage = {};
                     scope.emojiMessage.replyToUser = function(){
-                        scope.sendMessage();
+                        var len = scope.emojiMessage.messagetext.length;
+                        if(len > 0)
+                            scope.sendMessage();
                     };
 
                     var hasMoreMessages = true;
@@ -149,16 +162,20 @@
 
                     scope.sendMessage = function () {
                         try {
-                            //var message = $filter('stripHTML')($sanitize($scope.popup.newMessage));
-                            var message = $filter('stripHTML')(scope.emojiMessage.messagetext);
+                            var message = $filter('stripHTML')($sanitize(scope.emojiMessage.messagetext));
+                            // var message = $filter('stripHTML')(scope.emojiMessage.messagetext);
                             var roomId = scope.popup.roomId;
                             if (message.length) {
                                 ctrl.proxy.server.sendMessage(roomId, message).done(function () {
                                     scope.$apply(function () {
                                         scope.emojiMessage.messagetext = "";
                                     });
-                                }).fail(function (e) {
-                                    return console.log("Error: ", e);
+                                }).fail(function (err) {
+                                    scope.errors.push({
+                                        code: "3",
+                                        message: "Erro ao enviar mensagem. Atualize a página e tente novamente."
+                                    });
+                                    console.log("Error: ", err);
                                 });
                             }
                         } catch (err) {
@@ -166,7 +183,7 @@
                                 code: "3",
                                 message: "Erro ao enviar mensagem. Atualize a página e tente novamente."
                             });
-                            console.log(err);
+                            console.log("Error: ", err);
                         }
                     };
 
@@ -185,15 +202,16 @@
                                             // Recalculate all unread messages
                                             var counter = 0;
                                             ctrl.contacts.forEach(function (contact) {
-                                                if (contact.unreadMessages != void 0)
+                                                if (contact.unreadMessages != void 0) {
                                                     return counter += contact.unreadMessages;
+                                                }
                                             });
                                             // Save unread messages total into notifications counter
                                             $rootScope.chatNotifications = counter;
 
                                         }, 500);
                                     }).fail(function (e) {
-                                        console.log("Error: ", e.statusText)
+                                        console.log("Error: ", e.statusText);
                                     });
                                 },
                                 function (error) {
@@ -215,6 +233,13 @@
                             typingTimeout = setTimeout(function () {
                                 ctrl.proxy.server.userIsTyping(roomId, $rootScope.user.status_id);
                             }, 200);
+                        } else {
+                            if (!scope.isSupported) {
+                                var len = scope.emojiMessage.messagetext.length;
+                                if (len > 0) {
+                                    scope.sendMessage();
+                                }
+                            }
                         }
                     };
 
@@ -259,13 +284,25 @@
                         calcPosition();
                     });
 
+                    // Alternate popup animation on mobile devices
                     if($(window).width() < 768)
                         $(element).addClass('chatSlideInLeft');
                     else
                         $(element).addClass('chatSlideInUp');
 
-                    element.on('click', function(){
-                        $('.chat-sidebar, body').addClass('narrow-sidebar');
+                    // Narrow sidebar when focusing popup box
+                    // element.on('click', function(){
+                    //     $('.chat-sidebar, body').addClass('narrow-sidebar');
+                    // });
+
+                    // Highlight send button (mobile screens)
+                    scope.$watch('emojiMessage.messagetext', function(message){
+                        if(angular.isDefined(message)) {
+                            if (message.length > 0)
+                                angular.element('#sendbtn').addClass('active');
+                            else
+                                angular.element('#sendbtn').removeClass('active');
+                        }
                     });
 
                     /**
@@ -321,7 +358,7 @@
             }
         })
 
-        .directive("dummyImage", function() {
+        .directive("dummyImage", function () {
             return {
                 restrict: "A",
                 scope: {
@@ -359,7 +396,7 @@
                     length = scope.length || 2;
 
                     if (scope.dummyImage === "" || scope.dummyImage === void 0) {
-                        imgDummy = "img/datagrid_load.gif";
+                        imgDummy = "assets/angular-chat-directive/assets/loader.gif";
                         elem.attr('src', imgDummy);
                     }
 
@@ -373,7 +410,12 @@
                                     str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
                                 }
                                 imgDummy = "http://api-valuegaia.gaiacore.com.br/dummy/" + width + "x" + height + "/" + bgcolor + "/" + color + "/" + str;
-                                return elem.attr('src', imgDummy);
+
+                                elem.attr('src', imgDummy);
+                                elem[0].onerror = function () {
+                                    // place your error.png image instead
+                                    this.src = 'assets/angular-chat-directive/assets/user_thumb.png';
+                                };
                             }
                         } else {
                             return elem.attr('src', scope.dummyImage);
@@ -457,25 +499,6 @@
                 restrict: 'EA',
                 replace: true,
                 template: '<div class="chat-loader"><svg class="chat-loader-container first" width="35px" height="35px" viewBox="0 0 52 52"><circle class="chat-loader-path" /></svg><svg class="chat-loader-container second" width="35px" height="35px" viewBox="0 0 52 52"><circle class="chat-loader-path" /></svg></div>'
-            };
-        })
-
-        .directive("chatForm", function() {
-            return {
-                restrict: 'A',
-                scope: {
-                    action: '&chatFormSubmit'
-                },
-                link: function(scope, element) {
-                    $(element).bind('keydown keypress', function(event) {
-                        if (event.which === 13) {
-                            if (($(this).val().trim()).length > 0 && !event.shiftKey) {
-                                scope.$apply(scope.action);
-                                return false;
-                            }
-                        }
-                    });
-                }
             };
         })
 
