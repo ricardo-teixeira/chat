@@ -1,6 +1,6 @@
 {
   "name": "angular-chat-directive",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "homepage": "https://github.com/ricardo-teixeira/chat",
   "description": "Angular Chat with SignalR API",
   "main": ["chat-sidebar.drv.js"],

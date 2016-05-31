@@ -26,7 +26,7 @@
                 '<div class="chat-body slim-scrollbar-dark">' +
                 '<div class="tab-content" ng-show="isActiveTab(\'status\')">' +
                 '<ul>' +
-                '<li ng-repeat="status in vm.statusList"><a href="javascript:;" ng-click="vm.changeStatus(status.id)"><span chat-status="status.id"></span>{{status.name}}</a></li>' +
+                '<li ng-repeat="status in vm.statusList"><a href="javascript:;" ng-click="vm.changeStatus(status.id); setActiveTab(\'contacts\')"><span chat-status="status.id"></span>{{status.name}}</a></li>' +
                 '</ul>' +
                 '</div>' +
                 '<div class="tab-content" ng-show="isActiveTab(\'search\')">' +
@@ -224,7 +224,7 @@
                                 notification: false
                             };
 
-                            ChatAPI.loadSettings().get({userId: userInfo.id}).$promise.then(function (response) {                            
+                            ChatAPI.loadSettings().get({userId: userInfo.id}).$promise.then(function (response) {
                                 if (response !== void 0) {
                                     var data = {
                                         sound: response.sound,
@@ -236,7 +236,7 @@
 
                             // Save user's settings
                             $scope.$watch('vm.settings', function(n, o){
-                                if(n != o)                               
+                                if(n != o)
                                     ChatAPI.saveSettings().post(n);
                             }, true);
 
