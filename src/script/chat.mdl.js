@@ -48,6 +48,7 @@
                 '<h4 class="contact-name" ng-bind-html="search.participant[0].name | trim:true:35 | highlight:searchBy.text"></h4>' +
                 '<div class="contact-last-message" ng-bind-html="search.lastMessage | trim:true:35 | colonToSmiley"></div>' +
                 '</div>' +
+                '<span class="chat-badge" ng-show="contact.unreadMessages >= 1" ng-bind="contact.unreadMessages"></span>' +
                 '</li>' +
                 '</ul>' +
                 // Error logs
@@ -62,6 +63,7 @@
                 '<h4 class="contact-name" ng-bind-html="contact.participant[0].name | trim:true:35 | highlight:searchBy.text"></h4>' +
                 '<div class="contact-last-message" ng-bind-html="contact.lastMessage | trim:true:35 | colonToSmiley"></div>' +
                 '</div>' +
+                '<span class="chat-badge" ng-show="contact.unreadMessages >= 1" ng-bind="contact.unreadMessages"></span>' +
                 '</li>' +
                 '<div ng-show="!contactlist.length && vm.doneContacts || !contactlist.length && vm.searchResults.length" class="error-log"><i class="fa fa-users"></i>Nenhum contato encontrado</div>' +
                 '<div chat-loader ng-show="vm.gettingContacts || !vm.doneContacts"></div>' +
@@ -100,13 +102,13 @@
 
                     // Sidebar contact popover with more information
                     vm.popoverContactTpl =  '<div class="chat-contact-info">' +
-                                            '<div class="popover-media"><span class="contact-photo"><img dummy-image="items.photo" dummy-text="items.name" width="85" height="85"/></span></div>' +
-                                            '<div class="contact-info">' +
-                                            '<h4 class="contact-name">{{items.name}}</h4>' +
-                                            '<span class="contact-company">{{items.company}}</span>' +
-                                            // '<span class="contact-email" ng-if="items.email">{{items.email}}</span>' +
-                                            '</div>' +
-                                            '</div>';
+                        '<div class="popover-media"><span class="contact-photo"><img dummy-image="items.photo" dummy-text="items.name" width="85" height="85"/></span></div>' +
+                        '<div class="contact-info">' +
+                        '<h4 class="contact-name">{{items.name}}</h4>' +
+                        '<span class="contact-company">{{items.company}}</span>' +
+                        // '<span class="contact-email" ng-if="items.email">{{items.email}}</span>' +
+                        '</div>' +
+                        '</div>';
 
                     // Default audio when receiving messages
                     var audio = new Audio('assets/angular-chat-directive/assets/blob.wav');

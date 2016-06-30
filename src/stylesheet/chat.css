@@ -409,6 +409,21 @@
     .chat-sidebar a:hover {
       color: #DEDDD9;
       text-decoration: none; }
+  .chat-sidebar .chat-sidebar .chat-badge {
+    border-radius: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 6px;
+    height: 18px;
+    width: 18px;
+    margin: auto;
+    padding: 0px 4px;
+    font-size: 10px;
+    background-color: #3BA36E;
+    text-align: center;
+    line-height: 18px;
+    color: #fff; }
   .chat-sidebar .chat-sidebar-container {
     position: relative;
     height: 100%; }
