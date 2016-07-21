@@ -1,5 +1,7 @@
 # Angular Chat with SignalR API
 
+![alt text](https://raw.githubusercontent.com/ricardo-teixeira/chat/master/demo-snapshot.jpg "Chat Preview")
+
 ## Fron-End
 
 - Instalar Bower `npm install -g bower`
